@@ -27,17 +27,17 @@ app.get("/api/notes",function(req,res){
 //creating notes
 
 var notesArray = [];
+let ID = 1;
 app.post("/api/notes", function(req,res){
     var newNote = req.body;
+    newNote.id = ID;
     var db = fs.readFileSync("./db/db.json","utf8");
     notesArray.push(newNote);
 
-    // tempFile = db.replace("Test Title",newNote.title);
-    // tempFile = tempFile.replace("Test text",newNote.text);
-    console.log(newNote);
     var allNotes = JSON.stringify(notesArray);
-    console.log(allNotes);
+    
     fs.writeFileSync("./db/db.json",allNotes);
+    ID ++;
     res.json(newNote);
 })
 
