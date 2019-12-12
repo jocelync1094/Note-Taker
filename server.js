@@ -21,16 +21,23 @@ app.get("/notes", function(req,res){
 
 app.get("/api/notes",function(req,res){
     var db = fs.readFileSync("./db/db.json","utf8");
-    return res.json(db);
+    return res.json(JSON.parse(db));
 })
 
 //creating notes
+
+var notesArray = [];
 app.post("/api/notes", function(req,res){
     var newNote = req.body;
     var db = fs.readFileSync("./db/db.json","utf8");
-    var tempNote = db.replace("Test Title",newNote.title);
-    tempNote = tempNote.replace("Test Text",newNote.text);
-    fs.writeFileSync("db.json",tempNote);
+    notesArray.push(newNote);
+
+    // tempFile = db.replace("Test Title",newNote.title);
+    // tempFile = tempFile.replace("Test text",newNote.text);
+    console.log(newNote);
+    var allNotes = JSON.stringify(notesArray);
+    console.log(allNotes);
+    fs.writeFileSync("./db/db.json",allNotes);
     res.json(newNote);
 })
 
