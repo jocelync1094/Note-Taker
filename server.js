@@ -41,6 +41,19 @@ app.post("/api/notes", function(req,res){
     res.json(newNote);
 })
 
+// deleting notes
+
+app.delete("/api/notes/:id", function(req,res){
+    var deleteNote = req.params.id;
+
+    notesArray = notesArray.filter(function(obj){
+        return obj.id != deleteNote;
+    });
+    console.log(notesArray);
+    var deletedNotes = JSON.stringify(notesArray);
+    fs.writeFileSync("./db/db.json",deletedNotes);
+    
+})
 
 
 app.listen(PORT, function() {
